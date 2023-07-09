@@ -57,6 +57,14 @@ function validateEmail(email) {
   }
 }
 
+function checkDuplicate(name) {
+  const normalizedSearch = name.toLowerCase();
+  return contacts.some(contact => {
+    const fullName = `${contact.firstName} ${contact.lastName}`.toLowerCase();
+    return fullName === normalizedSearch;
+  });
+}
+
 function addContact() {
   console.log('--- Add Contact ---');
 
@@ -65,6 +73,13 @@ function addContact() {
 
   const lastName = readline.question('Enter last name: ');
   validateName(lastName);
+
+  const fullName = `${firstName} ${lastName}`;
+
+  if (checkDuplicate(fullName)) {
+    console.log('Contact already exists.');
+    return;
+  }
 
   const phoneNumber = readline.question('Enter phone number: ');
   validatePhone(phoneNumber);
