@@ -113,7 +113,6 @@ function displayContacts() {
   });
 }
 
-
 function findContactByName(name) {
   const normalizedSearch = name.toLowerCase();
   return contacts.find(contact => {
@@ -214,15 +213,24 @@ function deleteContact() {
   console.log('Contact deleted successfully!');
 }
 
+function countContacts() {
+  console.log('--- Count Contacts ---');
+
+  const contactCount = contacts.reduce(count => count + 1, 0);
+
+  console.log(`Number of contacts: ${contactCount}`);
+}
+
 while (true) {
   console.log('\n----- Address Book -----');
   console.log('1. Add Contact');
   console.log('2. Display Contacts');
   console.log('3. Edit Contact');
   console.log('4. Delete Contact');
-  console.log('5. Quit');
+  console.log('5. Count Contacts');
+  console.log('6. Quit');
 
-  const choice = readline.question('Enter your choice (1-5): ');
+  const choice = readline.question('Enter your choice (1-6): ');
 
   switch (choice) {
     case '1':
@@ -241,7 +249,10 @@ while (true) {
     case '4':
       deleteContact();
       break;
-    case '5':
+      case '5':
+        countContacts();
+        break;
+    case '6':
       console.log('Goodbye!');
       process.exit(0);
     default:
