@@ -41,7 +41,7 @@ function validateState(state) {
 
 function validateZip(zip) {
   if (!/^\d{6}$/.test(zip)) {
-    throw new Error('Invalid ZIP code. ZIP code should be 5 digits.');
+    throw new Error('Invalid ZIP code. ZIP code should be 6 digits.');
   }
 }
 
