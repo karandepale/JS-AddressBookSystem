@@ -99,18 +99,97 @@ function displayContacts() {
   }
 
   console.log('Contacts in the address book:');
-  contacts.forEach(contact => {
-    console.log(contact);
+  contacts.forEach((contact, index) => {
+    console.log(`${index + 1}. ${contact.firstName} ${contact.lastName}`);
   });
+}
+
+function findContactByName(name) {
+  const normalizedSearch = name.toLowerCase();
+  return contacts.find(contact => {
+    const fullName = `${contact.firstName} ${contact.lastName}`.toLowerCase();
+    return fullName.includes(normalizedSearch);
+  });
+}
+
+function editContact() {
+  console.log('--- Edit Contact ---');
+
+  if (contacts.length === 0) {
+    console.log('Address book is empty.');
+    return;
+  }
+
+  const searchName = readline.question('Enter the name of the contact to edit: ');
+  const contactToEdit = findContactByName(searchName);
+
+  if (!contactToEdit) {
+    console.log('Contact not found.');
+    return;
+  }
+
+  console.log('Contact found:');
+  console.log(contactToEdit);
+
+  const newFirstName = readline.question('Enter new first name (leave empty to keep existing): ');
+  if (newFirstName.trim() !== '') {
+    validateName(newFirstName);
+    contactToEdit.firstName = newFirstName;
+  }
+
+  const newLastName = readline.question('Enter new last name (leave empty to keep existing): ');
+  if (newLastName.trim() !== '') {
+    validateName(newLastName);
+    contactToEdit.lastName = newLastName;
+  }
+
+  const newPhoneNumber = readline.question('Enter new phone number (leave empty to keep existing): ');
+  if (newPhoneNumber.trim() !== '') {
+    validatePhone(newPhoneNumber);
+    contactToEdit.phoneNumber = newPhoneNumber;
+  }
+
+  const newEmail = readline.question('Enter new email (leave empty to keep existing): ');
+  if (newEmail.trim() !== '') {
+    validateEmail(newEmail);
+    contactToEdit.email = newEmail;
+  }
+
+  const newAddress = readline.question('Enter new address (leave empty to keep existing): ');
+  if (newAddress.trim() !== '') {
+    validateAddress(newAddress);
+    contactToEdit.address = newAddress;
+  }
+
+  const newCity = readline.question('Enter new city (leave empty to keep existing): ');
+  if (newCity.trim() !== '') {
+    validateCity(newCity);
+    contactToEdit.city = newCity;
+  }
+
+  const newState = readline.question('Enter new state (leave empty to keep existing): ');
+  if (newState.trim() !== '') {
+    validateState(newState);
+    contactToEdit.state = newState;
+  }
+
+  const newZip = readline.question('Enter new ZIP code (leave empty to keep existing): ');
+  if (newZip.trim() !== '') {
+    validateZip(newZip);
+    contactToEdit.zip = newZip;
+  }
+
+  console.log('Contact edited successfully!');
 }
 
 while (true) {
   console.log('\n----- Address Book -----');
   console.log('1. Add Contact');
   console.log('2. Display Contacts');
-  console.log('3. Quit');
+  console.log('3. Edit Contact');
+  console.log('4. Quit');
 
-  const choice = readline.question('Enter your choice (1-3): ');
+  const choice = readline.question('Enter your choice (1-4): ');
 
   switch (choice) {
     case '1':
@@ -124,6 +203,9 @@ while (true) {
       displayContacts();
       break;
     case '3':
+      editContact();
+      break;
+    case '4':
       console.log('Goodbye!');
       process.exit(0);
     default:
