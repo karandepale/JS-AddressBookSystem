@@ -65,6 +65,86 @@ function checkDuplicate(name) {
   });
 }
 
+function searchByCity(city) {
+  const searchResults = contacts.filter(contact => contact.city.toLowerCase() === city.toLowerCase());
+  return searchResults;
+}
+function searchByState(state) {
+  const searchResults = contacts.filter(contact => contact.state.toLowerCase() === state.toLowerCase());
+  return searchResults;
+}
+function displaySearchResults(results) {
+  console.log('Search Results:');
+  if (results.length === 0) {
+    console.log('No contacts found.');
+    return;
+  }
+  results.forEach((contact, index) => {
+    console.log(`${index + 1}. Contact ${index + 1}`);
+    console.log('First Name:', contact.firstName);
+    console.log('Last Name:', contact.lastName);
+    console.log('Phone Number:', contact.phoneNumber);
+    console.log('Email:', contact.email);
+    console.log('Address:', contact.address);
+    console.log('City:', contact.city);
+    console.log('State:', contact.state);
+    console.log('ZIP Code:', contact.zip);
+    console.log('--------------------------');
+  });
+}
+
+function displayContacts() {
+  console.log('--- Display Contacts ---');
+
+  if (contacts.length === 0) {
+    console.log('Address book is empty.');
+    return;
+  }
+
+  const choice = readline.question('1. Display all contacts\n2. Search by city or state\nEnter your choice (1-2): ');
+
+  switch (choice) {
+    case '1':
+      console.log('Contacts in the address book:');
+      contacts.forEach((contact, index) => {
+        console.log(`${index + 1}. Contact ${index + 1}`);
+        console.log('First Name:', contact.firstName);
+        console.log('Last Name:', contact.lastName);
+        console.log('Phone Number:', contact.phoneNumber);
+        console.log('Email:', contact.email);
+        console.log('Address:', contact.address);
+        console.log('City:', contact.city);
+        console.log('State:', contact.state);
+        console.log('ZIP Code:', contact.zip);
+        console.log('--------------------------');
+      });
+      break;
+    case '2':
+      const searchOption = readline.question('1. Search by city\n2. Search by state\nEnter your choice (1-2): ');
+
+      switch (searchOption) {
+        case '1':
+          const city = readline.question('Enter the city to search for: ');
+          const cityResults = searchByCity(city);
+          displaySearchResults(cityResults);
+          break;
+        case '2':
+          const state = readline.question('Enter the state to search for: ');
+          const stateResults = searchByState(state);
+          displaySearchResults(stateResults);
+          break;
+        default:
+          console.log('Invalid choice. Returning to main menu.');
+          break;
+      }
+      break;
+    default:
+      console.log('Invalid choice. Returning to main menu.');
+      break;
+  }
+}
+
+
 function addContact() {
   console.log('--- Add Contact ---');
 
@@ -105,28 +185,8 @@ function addContact() {
   console.log('Contact added successfully!');
 }
 
-function displayContacts() {
-  console.log('--- Display Contacts ---');
 
-  if (contacts.length === 0) {
-    console.log('Address book is empty.');
-    return;
-  }
 
-  console.log('Contacts in the address book:');
-  contacts.forEach((contact, index) => {
-    console.log(`${index + 1}. Contact ${index + 1}`);
-    console.log('First Name:', contact.firstName);
-    console.log('Last Name:', contact.lastName);
-    console.log('Phone Number:', contact.phoneNumber);
-    console.log('Email:', contact.email);
-    console.log('Address:', contact.address);
-    console.log('City:', contact.city);
-    console.log('State:', contact.state);
-    console.log('ZIP Code:', contact.zip);
-    console.log('--------------------------');
-  });
-}
 
 function findContactByName(name) {
   const normalizedSearch = name.toLowerCase();
