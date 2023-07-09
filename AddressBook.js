@@ -100,9 +100,19 @@ function displayContacts() {
 
   console.log('Contacts in the address book:');
   contacts.forEach((contact, index) => {
-    console.log(`${index + 1}. ${contact.firstName} ${contact.lastName}`);
+    console.log(`${index + 1}. Contact ${index + 1}`);
+    console.log('First Name:', contact.firstName);
+    console.log('Last Name:', contact.lastName);
+    console.log('Phone Number:', contact.phoneNumber);
+    console.log('Email:', contact.email);
+    console.log('Address:', contact.address);
+    console.log('City:', contact.city);
+    console.log('State:', contact.state);
+    console.log('ZIP Code:', contact.zip);
+    console.log('--------------------------');
   });
 }
+
 
 function findContactByName(name) {
   const normalizedSearch = name.toLowerCase();
@@ -182,14 +192,37 @@ function editContact() {
   console.log('Contact edited successfully!');
 }
 
+function deleteContact() {
+  console.log('--- Delete Contact ---');
+
+  if (contacts.length === 0) {
+    console.log('Address book is empty.');
+    return;
+  }
+
+  const searchName = readline.question('Enter the name of the contact to delete: ');
+  const contactToDelete = findContactByName(searchName);
+
+  if (!contactToDelete) {
+    console.log('Contact not found.');
+    return;
+  }
+
+  const index = contacts.indexOf(contactToDelete);
+  contacts.splice(index, 1);
+
+  console.log('Contact deleted successfully!');
+}
+
 while (true) {
   console.log('\n----- Address Book -----');
   console.log('1. Add Contact');
   console.log('2. Display Contacts');
   console.log('3. Edit Contact');
-  console.log('4. Quit');
+  console.log('4. Delete Contact');
+  console.log('5. Quit');
 
-  const choice = readline.question('Enter your choice (1-4): ');
+  const choice = readline.question('Enter your choice (1-5): ');
 
   switch (choice) {
     case '1':
@@ -206,6 +239,9 @@ while (true) {
       editContact();
       break;
     case '4':
+      deleteContact();
+      break;
+    case '5':
       console.log('Goodbye!');
       process.exit(0);
     default:
